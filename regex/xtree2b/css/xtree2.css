@@ -1,0 +1,82 @@
+.webfx-tree-row {
+	/*
+	line-height:	16px;
+	height:			16px;
+	*/
+	white-space:	nowrap;
+	font:			icon;
+}
+
+
+.webfx-tree-row span {
+	/*
+	display:		inline-block;
+	height:			16px;
+	line-height:	16px;
+	*/
+
+	overflow:		hidden;
+	text-overflow:	ellipsis;
+}
+
+.webfx-tree-children {
+	background-repeat:	repeat-y;
+	background-image:	url("../images/I.png") !important;
+	background-position-y:	1px !important;	/* IE only */
+	font:			icon;
+}
+
+.webfx-tree-children-nolines {
+	font:			icon;
+}
+
+
+.webfx-tree-row img {
+	vertical-align:	middle;
+	height:			16px;
+}
+
+.webfx-tree-icon {
+	width:			16px;
+	cursor:			hand;
+	cursor:			pointer;
+}
+
+.webfx-tree-expand-icon {
+	width:		19px;
+}
+
+.webfx-tree-item-label {
+	margin-left:		3px;
+	padding:			1px 2px 1px 2px;
+	text-decoration:	none;
+	color:				WindowText;
+
+}
+
+.webfx-tree-item-label:hover {
+	text-decoration:	underline;
+	color:				blue;
+}
+
+.selected .webfx-tree-item-label:hover,
+.selected .webfx-tree-item-label {
+	background:	ThreeDFace;
+}
+
+.selected .webfx-tree-item-label:focus:hover,
+.selected .webfx-tree-item-label:focus,
+.selected .webfx-tree-item-label:active:hover,
+.selected .webfx-tree-item-label:active {
+	background:	Highlight;
+	color:		HighlightText;
+}
+
+.webfx-tree-item-label {
+	/*-moz-border-radius:	4px;*/
+	/*border:				1px solid transparent;*/
+}
+
+.webfx-tree-hide-root {
+	display:	none;
+}

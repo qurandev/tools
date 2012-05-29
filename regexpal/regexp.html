@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<!--
+
+Copyright 2007 Erik Arvidsson
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License.
+
+-->
+
+<html>
+<head>
+<title>Regular Expression Tool</title>
+<link rel="stylesheet" href="xtree2b/css/xtree2.css">
+<script src="xtree2b/js/xtree2.js"></script>
+<style>
+
+body {
+  font: message-box;
+  font-size: 12px;
+  background: ThreeDFace;
+}
+
+#regexp, #sample-text, #result {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: black;
+  padding: 0;
+  z-index: 2;
+}
+
+textarea, body {
+  overflow: auto;
+}
+
+#regexp {
+  width: 100%;
+  height: 98px;
+}
+
+#regexp-container {
+  top: 10px;
+  left: 10px;
+  right: 120px;
+  height: 100px;
+}
+
+#labels {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 100px;
+}
+
+#labels > label {
+  display: block;
+}
+
+#labels > label > input {
+  margin: 2px 5px;
+  position: relative;
+  top: 2px;
+}
+
+#sample-container {
+  top: 120px;
+  height: 100px;
+  left: 10px;
+  right: 10px;
+}
+
+#sample-text {
+  height: 98px;
+}
+
+#result-container {
+  top: 230px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+}
+
+#result{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  overflow: auto;
+  padding: 2px;
+}
+
+.container {
+  position: absolute;
+  /*-moz-box-sizing: border-box;
+  box-sizing: border-box;*/
+  border: 1px solid ThreeDShadow;
+  background: white;
+}
+
+.container > label {
+  position: absolute;
+  font-size: 3.5em;
+  font-weight: bold;
+  color: #ddd;
+  right: 0;
+  bottom: 0;
+  padding: 8px 16px;
+  z-index: 1;
+}
+
+.empty-group {
+  color: GrayText;
+}
+
+#help-icon {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 14px;
+  height: 14px;
+  background: white;
+  color: #555;
+  border: 1px solid #999;
+  font: 11px Arial;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+}
+
+#help-icon:hover,#help-icon:focus {
+  border-color: #000;
+  color: #000;
+}
+
+#help {
+  position: absolute;
+  background: rgb(255, 255, 200);
+  background: rgba(255, 255, 200, 0.9);
+  top: 25px;
+  right: 5px;
+  border: 1px solid #aaa;
+  padding: 0.4em 1em;
+  border-radius: 4px;
+  -webkit-box-shadow: rgba(0, 0, 0, .5) 1px 1px 5px;
+  z-index: 3;
+}
+
+#help {
+  border-spacing: 0;
+  cursor: default;
+}
+
+#help td > code {
+  font-family: monospace;
+  font-size: 9pt;
+  padding-right: 2em;
+}
+
+#help td > hr {
+  border: 0;
+  border-top: 1px solid #aaa;
+  margin: 0.5em 0;
+}
+
+.webfx-tree-row {
+  font-size: 12px;
+  height: 16px;
+}
+
+</style>
+</head>
+<body>
+
+<script>
+
+var t = new WebFXTree('Result');
+
+function test() {
+  while (t.hasChildren()) {
+    t.remove(t.lastChild);
+  }
+
+  var flags = (document.getElementById('multiline').checked ? 'm' : '') +
+              (document.getElementById('ignore').checked ? 'i' : '');
+  var global = document.getElementById('global').checked;
+  var re = new RegExp(document.getElementById('regexp').value, flags);
+
+  var sampleText = document.getElementById('sample-text').value;
+
+  var startIndex = 0;
+  var totalLength = sampleText.length;
+  var result, pos;
+
+  while (startIndex != totalLength) {
+    result = re.exec(sampleText);
+    if (result && result.length > 0 && result[0].length > 0) {
+      pos = sampleText.indexOf(result[0]);
+      startIndex += pos;
+      var treeMatch = new WebFXTreeItem;
+      treeMatch.setText(result[0]);
+      for (var i = 1; i < result.length; i++) {
+        var groupItem = new WebFXTreeItem;
+        groupItem.setHtml(result[i] || '<span class=empty-group>Empty</span>');
+        treeMatch.add(groupItem);
+      }
+      t.add(treeMatch);
+      sampleText = sampleText.substr(pos + result[0].length);
+      startIndex += result[0].length;
+    } else {
+      break;
+    }
+    if (!global) break;
+  }
+  t.expandAll();
+}
+
+function init() {
+  var regExpEl = document.getElementById('regexp');
+  var sampleEl = document.getElementById('sample-text');
+  var globalEl = document.getElementById('global');
+  var multilineEl = document.getElementById('multiline');
+  var ignoreEl = document.getElementById('ignore');
+  var helpIconEl = document.getElementById('help-icon');
+  var helpEl = document.getElementById('help');
+
+  if (regExpEl.addEventListener) {
+    regExpEl.addEventListener('input', test, false);
+    sampleEl.addEventListener('input', test, false);
+  } else {
+    regExpEl.onpropertychange = sampleEl.onpropertychange =
+        handlePropertyChange;
+  }
+  globalEl.onclick = multilineEl.onclick = ignoreEl.onclick = test;
+  helpIconEl.onclick = toggleHelp;
+  helpIconEl.onblur = hideHelp;
+}
+
+function handlePropertyChange(e) {
+  if (!e) e = window.event;
+  if (e.propertyName == 'value') test();
+}
+
+function toggleHelp(e) {
+  var el = document.getElementById('help');
+  var shown = el.style.display == 'none';
+  el.style.display = shown ? '' : 'none';
+  return false;
+}
+
+function hideHelp(e) {
+  var el = document.getElementById('help');
+  el.style.display = 'none';
+}
+
+
+</script>
+<div id=regexp-container class=container><label for=regexp>RegExp</label><textarea id=regexp tabindex=1></textarea></div>
+<div id=labels>
+  <label tabindex=3><input type=checkbox id=global>Global</label>
+  <label tabindex=4><input type=checkbox id=multiline>Multiline</label>
+  <label tabindex=5><input type=checkbox id=ignore>Ignore case</label>
+
+</div>
+
+<div id=sample-container class=container><label for=sample-text>Sample Text</label><textarea id=sample-text tabindex=2></textarea></div>
+
+<a id=help-icon href=#>?</a>
+
+<div id=result-container class=container>
+  <label for=result>Result</label>
+  <div id=result>
+  <script>
+  t.write();
+  test();
+  init();
+  </script>
+  </div>
+</div>
+
+<table id=help style="display:none">
+  <tr>
+    <td><code>.</code>
+    <td>any character except a newline
+  <tr>
+    <td><code>\d</code>
+    <td>any decimal digit
+  <tr>
+    <td><code>\D</code>
+    <td>any non-digit
+  <tr>
+    <td><code>\s</code>
+    <td>any whitespace character
+  <tr>
+    <td><code>\S</code>
+    <td>any non-whitespace characte
+  <tr>
+    <td><code>\w</code>
+    <td>any alphanumeric character
+  <tr>
+    <td><code>\W</code>
+    <td>any non-alphanumeric character
+  <tr>
+    <td><code>\number</code>
+    <td>the contents of the group with the given number
+
+  <tr>
+    <td colspan=2><hr>
+
+  <tr>
+    <td><code>*</code>
+    <td>zero or more of the preceding block
+  <tr>
+    <td><code>*?</code>
+    <td>zero or more of the preceding block (non-greedy)
+  <tr>
+    <td><code>+</code>
+    <td>one or more of the preceding block
+  <tr>
+    <td><code>+?</code>
+    <td>one or more of the preceding block (non-greedy)
+  <tr>
+    <td><code>?</code>
+    <td>zero or one of the preceding block
+  <tr>
+    <td><code>??</code>
+    <td>zero or one of the preceding block (non-greedy)
+  <tr>
+    <td><code>{m}</code>
+    <td>exactly m copies of the preceding block
+  <tr>
+    <td><code>{m, n}</code>
+    <td>m to n copies of the preceding block
+  <tr>
+    <td><code>{m, n}?</code>
+    <td>m to n copies of the preceding block (no-greedy)
+
+  <tr>
+    <td colspan=2><hr>
+
+  <tr>
+    <td><code>^</code>
+    <td>beginning of line
+  <tr>
+    <td><code>$</code>
+    <td>end of line
+  <tr>
+    <td><code>\b</code>
+    <td>word boundary
+  <tr>
+    <td><code>\B</code>
+    <td>non-word boundary
+
+  <tr>
+    <td colspan=2><hr>
+
+  <tr>
+    <td><code>(...)</code>
+    <td>group
+  <tr>
+    <td><code>(?:...)</code>
+    <td>non-grouping group
+  <tr>
+    <td><code>(?=...)</code>
+    <td>matches if &lt;...> matches next, but does not consume the string
+  <tr>
+    <td><code>(?!...)</code>
+    <td>matches if &lt;...> does NOT match next, but does not consume the string
+
+  <tr>
+    <td colspan=2><hr>
+
+  <tr>
+    <td><code>x|y</code>
+    <td>matches x or y
+  <tr>
+    <td><code>[xyz]</code>
+    <td>matches any one of x, y or z
+  <tr>
+    <td><code>[^xyz]</code>
+    <td>matches any character except x, y or z
+  <tr>
+    <td><code>[a-z]</code>
+    <td>matches any one character between a and z
+  <tr>
+    <td><code>[^a-z]</code>
+    <td>matches any one character except the characters between a and z
+</table>
+
+</body>
+</html>

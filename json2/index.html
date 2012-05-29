@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Online JSON Viewer</title>
+<meta name="description" content="JSON Viewer - Convert JSON Strings to a Friendly Readable Format">
+<meta name="keywords" content="json, json viewer">
+<link rel="stylesheet" type="text/css" href="extjs/css/ext-gray-all.css">
+<script type="text/javascript" src="jsonviewer-all.js?v7"></script>
+<script type="text/javascript" src="extjs/js/ext-base.js?_ts1247910528"></script><script type="text/javascript" src="extjs/js/ext-all-debug.js?_ts1248266884"></script><script type="text/javascript" src="clipboard.js?_ts1248266988"></script><script type="text/javascript" src="jsonviewer.js?_ts1306558897"></script><style type="text/css">.br0 {color:#090} .st0 {color:#36C} .sy0 {color:#393}</style>
+</head><body>
+
+<h1>Online JSON Viewer</h1>
+
+<div class="tab">
+	<h2>About JSON</h2>
+	<div>
+		<b>JSON</b>, short for <b>JavaScript Object Notation</b>, is a lightweight computer data interchange format. JSON is a text-based, human-readable format for representing simple data structures and associative arrays (called objects).<br/><br/>
+		Read more: <a href="http://json.org" target="_blank">json.org</a>, <a href="http://en.wikipedia.org/wiki/JSON" target="_blank">wikipedia</a>, <a href="http://www.google.com/search?q=json" target="_blank">google</a><br/><br/>
+		<h3>In JSON, they take on these forms</h3>
+		<img src="img/object.png" height="113" width="598" alt="JSON object"/><br/><br/>
+		<img src="img/array.png" height="113" width="598" alt="JSON array"/><br/><br/>
+		<img src="img/value.png" height="278" width="598" alt="JSON value"/><br/><br/>
+		<img src="img/string.png" height="413" width="598" alt="JSON string"/><br/><br/>
+		<img src="img/number.png" height="266" width="598" alt="JSON number"/>
+	</div>
+</div>
+
+<div class="tab">
+	<h2>Example</h2>
+	<div>
+
+<pre><span class="br0">{</span>
+    <span class="st0">"firstName"</span><span class="sy0">:</span> <span class="st0">"John"</span><span class="sy0">,</span>
+    <span class="st0">"lastName"</span><span class="sy0">:</span> <span class="st0">"Smith"</span><span class="sy0">,</span>
+    <span class="st0">"gender"</span><span class="sy0">:</span> <span class="st0">"man"</span><span class="sy0">,</span>
+    <span class="st0">"age"</span><span class="sy0">:</span> <span class="st0">32</span><span class="sy0">,</span>
+    <span class="st0">"address"</span><span class="sy0">:</span> <span class="br0">{</span>
+        <span class="st0">"streetAddress"</span><span class="sy0">:</span> <span class="st0">"21 2nd Street"</span><span class="sy0">,</span>
+        <span class="st0">"city"</span><span class="sy0">:</span> <span class="st0">"New York"</span><span class="sy0">,</span>
+        <span class="st0">"state"</span><span class="sy0">:</span> <span class="st0">"NY"</span><span class="sy0">,</span>
+        <span class="st0">"postalCode"</span><span class="sy0">:</span> <span class="st0">"10021"</span>
+    <span class="br0">}</span><span class="sy0">,</span>
+    <span class="st0">"phoneNumbers"</span><span class="sy0">:</span> <span class="br0">[</span>
+        <span class="br0">{</span> <span class="st0">"type"</span><span class="sy0">:</span> <span class="st0">"home"</span><span class="sy0">,</span> <span class="st0">"number"</span><span class="sy0">:</span> <span class="st0">"212 555-1234"</span> <span class="br0">}</span><span class="sy0">,</span>
+        <span class="br0">{</span> <span class="st0">"type"</span><span class="sy0">:</span> <span class="st0">"fax"</span><span class="sy0">,</span> <span class="st0">"number"</span><span class="sy0">:</span> <span class="st0">"646 555-4567"</span> <span class="br0">}</span>
+    <span class="br0">]</span>
+<span class="br0">}</span></pre>
+
+	</div>
+</div>
+
+<div class="tab">
+	<h2>About Online JSON Viewer</h2>
+	<div>
+		Convert JSON Strings to a Friendly Readable Format<br/>
+		The application using <a href="http://extjs.com" target="_blank">Ext JS</a>.<br/>
+		Author: {gabor}<br/><br/>		
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<input type="hidden" name="cmd" value="_s-xclick"/>
+			<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----"/>
+			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"/>
+			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"/>
+		</form>
+	</div>
+</div>
+
+</body></html>
